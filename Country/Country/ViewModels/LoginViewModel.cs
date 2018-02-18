@@ -107,7 +107,7 @@
             this.Password = string.Empty;
 
             MainViewModel.GetInstance().Countrys = new CountrysViewModel();
-            await Application.Current.MainPage.Navigation.PushAsync(new CountryPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new CountrysPage());
         }
         #endregion
     }

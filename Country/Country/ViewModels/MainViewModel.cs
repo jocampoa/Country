@@ -1,7 +1,17 @@
 ﻿namespace Country.ViewModels
 {
+    using System.Collections.Generic;
+    using Models;
     public class MainViewModel
     {
+        #region Properties
+        public List<Country> CountrysList
+        {
+            get;
+            set;
+        }
+        #endregion
+
         #region ViewModels
         public LoginViewModel Login
         {
@@ -10,6 +20,12 @@
         }
 
         public CountrysViewModel Countrys
+        {
+            get;
+            set;
+        }
+
+        public CountryViewModel Country
         {
             get;
             set;

@@ -15,15 +15,15 @@
         {
             if (!CrossConnectivity.Current.IsConnected)
             {
-               return new Response
-              {
-                  IsSuccess = false,
-                  Message = "Please turn on your internet settings.",
-              };
-          }
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = "Please turn on your internet settings.",
+                };
+            }
 
-               var isReachable = await CrossConnectivity.Current.IsRemoteReachable(
-            "google.com");
+            var isReachable = await CrossConnectivity.Current.IsRemoteReachable(
+                "google.com");
             if (!isReachable)
             {
                 return new Response
