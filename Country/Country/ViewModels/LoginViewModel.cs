@@ -4,14 +4,8 @@
     using System.Windows.Input;
     using Xamarin.Forms;
     using Views;
-    using Country.Service;
-
     public class LoginViewModel : BaseViewModel
     {
-        #region Services
-        private ApiService apiService;
-        #endregion
-
         #region Events
 
         #endregion
@@ -55,13 +49,11 @@
         #region Constructors
         public LoginViewModel()
         {
-            this.apiService = new ApiService();
-
             this.IsRemembered = true;
             this.IsEnabled = true;
 
             this.Email = "david.ocampo.3928@gmail.com";
-            this.Password = "11108355";
+            this.Password = "1234";
         }
         #endregion
 
@@ -96,66 +88,26 @@
             this.IsRunning = true;
             this.IsEnabled = false;
 
-            var connection = await this.apiService.CheckConnection();
-
-            if (!connection.IsSuccess)
+            if (this.Email != "david.ocampo.3928@gmail.com" || this.Password != "1234")
             {
                 this.IsRunning = false;
                 this.IsEnabled = true;
                 await Application.Current.MainPage.DisplayAlert(
-                    //Languages.Error,
-                    //connection.Message,
-                    //Languages.Accept);
                     "Error",
-                    "Message",
-                    "Accept");
-                return;
-            }
-
-            var token = await this.apiService.GetToken(
-                "http://landsapi1.azurewebsites.net",
-                this.Email,
-                this.Password);
-
-            if (token == null)
-            {
-                this.IsRunning = false;
-                this.IsEnabled = true;
-                await Application.Current.MainPage.DisplayAlert(
-                    //Languages.Error,
-                    //Languages.SomethingWrong,
-                    //Languages.Accept);
-                    "Error",
-                    "SomethingWrong",
-                    "Accept");
-                return;
-            }
-
-            if (string.IsNullOrEmpty(token.AccessToken))
-            {
-                this.IsRunning = false;
-                this.IsEnabled = true;
-                await Application.Current.MainPage.DisplayAlert(
-                    //Languages.Error,
-                    //token.ErrorDescription,
-                    //Languages.Accept);
-                    "Error",
-                    "ErrorDescription",
+                    "Email or password incorrect.",
                     "Accept");
                 this.Password = string.Empty;
                 return;
             }
-
-            var mainViewModel = MainViewModel.GetInstance();
-            mainViewModel.Token = token;
-            mainViewModel.Countrys = new CountrysViewModel();
-            await Application.Current.MainPage.Navigation.PushAsync(new CountrysPage());
 
             this.IsRunning = false;
             this.IsEnabled = true;
 
             this.Email = string.Empty;
             this.Password = string.Empty;
+
+            MainViewModel.GetInstance().Countrys = new CountrysViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new CountrysPage());
         }
         #endregion
     }
